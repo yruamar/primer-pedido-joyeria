@@ -1,0 +1,666 @@
+/* Mobile-first. Sin frameworks ni fuentes externas: todo tiene que
+   funcionar sin conexion. */
+
+:root {
+  --fondo: #faf7f2;
+  --superficie: #ffffff;
+  --borde: #e6ded2;
+  --texto: #2c2620;
+  --texto-suave: #6d6357;
+  --oro: #8a6a3b;
+  --oro-claro: #f3ead9;
+  --verde: #2e7d52;
+  --rojo: #b3261e;
+  --sombra: 0 1px 3px rgba(44, 38, 32, 0.1);
+  --radio: 14px;
+  --alto-pestanas: 64px;
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--fondo);
+  color: var(--texto);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  font-size: 17px;
+  line-height: 1.45;
+  overscroll-behavior-y: contain;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+.app {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.contenido {
+  flex: 1;
+  padding: 12px 16px calc(var(--alto-pestanas) + env(safe-area-inset-bottom) + 24px);
+}
+
+.pantalla-centro {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 24px;
+  text-align: center;
+}
+
+.cargando {
+  color: var(--texto-suave);
+  font-size: 18px;
+}
+
+/* ---------- Buscador ---------- */
+
+.buscador {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  gap: 8px;
+  padding: 8px 0 12px;
+  background: var(--fondo);
+}
+
+.buscador-campo {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.buscador-icono {
+  position: absolute;
+  left: 12px;
+  font-size: 18px;
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.buscador-input {
+  width: 100%;
+  min-height: 52px;
+  padding: 0 40px 0 40px;
+  font-size: 17px;
+  color: var(--texto);
+  background: var(--superficie);
+  border: 1.5px solid var(--borde);
+  border-radius: var(--radio);
+  outline: none;
+  appearance: none;
+}
+
+.buscador-input:focus {
+  border-color: var(--oro);
+  box-shadow: 0 0 0 3px rgba(138, 106, 59, 0.15);
+}
+
+.buscador-input::-webkit-search-cancel-button {
+  display: none;
+}
+
+.buscador-limpiar {
+  position: absolute;
+  right: 4px;
+  width: 40px;
+  height: 40px;
+  font-size: 16px;
+  color: var(--texto-suave);
+  background: none;
+  border: 0;
+  border-radius: 50%;
+}
+
+.boton-escanear {
+  min-height: 52px;
+  padding: 0 16px;
+  font-size: 16px;
+  font-weight: 600;
+  white-space: nowrap;
+  color: #fff;
+  background: var(--oro);
+  border: 0;
+  border-radius: var(--radio);
+}
+
+.boton-escanear:active {
+  background: #6f5430;
+}
+
+.contador {
+  margin: 0 0 10px;
+  font-size: 15px;
+  color: var(--texto-suave);
+}
+
+/* ---------- Lista ---------- */
+
+.lista {
+  display: grid;
+  gap: 12px;
+}
+
+.tarjeta {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+  padding: 12px;
+  text-align: left;
+  background: var(--superficie);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+  box-shadow: var(--sombra);
+}
+
+.tarjeta:active {
+  background: #fdfbf7;
+  transform: scale(0.995);
+}
+
+.tarjeta-foto {
+  flex: 0 0 92px;
+  width: 92px;
+  height: 92px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: var(--oro-claro);
+  border-radius: 10px;
+}
+
+.tarjeta-foto img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.sin-foto {
+  font-size: 34px;
+  opacity: 0.4;
+}
+
+.sin-foto.grande {
+  font-size: 80px;
+}
+
+.tarjeta-datos {
+  flex: 1;
+  min-width: 0;
+}
+
+.tarjeta-linea1 {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.tarjeta-sku {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--oro);
+  letter-spacing: 0.02em;
+}
+
+.tarjeta-precio {
+  font-size: 17px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.tarjeta-nombre {
+  margin: 4px 0 6px;
+  font-size: 15px;
+  line-height: 1.35;
+  color: var(--texto);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.tarjeta-etiquetas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 6px;
+}
+
+.etiqueta {
+  padding: 2px 9px;
+  font-size: 13px;
+  color: var(--texto-suave);
+  background: var(--oro-claro);
+  border-radius: 999px;
+}
+
+.tarjeta-stock {
+  font-size: 15px;
+  color: var(--verde);
+}
+
+.tarjeta-stock .de-total {
+  color: var(--texto-suave);
+  font-size: 14px;
+}
+
+.tarjeta-stock.agotado {
+  font-weight: 700;
+  color: var(--rojo);
+}
+
+/* ---------- Estado vacio ---------- */
+
+.vacio {
+  padding: 48px 24px;
+  text-align: center;
+}
+
+.vacio-icono {
+  margin: 0;
+  font-size: 44px;
+  opacity: 0.35;
+}
+
+.vacio-texto {
+  margin: 12px 0 20px;
+  color: var(--texto-suave);
+  word-break: break-word;
+}
+
+.boton-secundario {
+  min-height: 48px;
+  padding: 0 22px;
+  font-size: 16px;
+  background: var(--superficie);
+  border: 1.5px solid var(--borde);
+  border-radius: var(--radio);
+}
+
+/* ---------- Detalle ---------- */
+
+.detalle {
+  padding-bottom: 8px;
+}
+
+.volver {
+  min-height: 48px;
+  margin-bottom: 8px;
+  padding: 0 4px;
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--oro);
+  background: none;
+  border: 0;
+}
+
+.detalle-foto {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1;
+  max-height: 46vh;
+  margin-bottom: 16px;
+  overflow: hidden;
+  background: var(--oro-claro);
+  border-radius: var(--radio);
+}
+
+.detalle-foto img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.detalle-nombre {
+  margin: 0 0 12px;
+  font-size: 21px;
+  line-height: 1.3;
+}
+
+.detalle-resumen {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 16px;
+  margin-bottom: 12px;
+  background: var(--superficie);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+}
+
+.resumen-precio {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.resumen-stock {
+  text-align: right;
+  color: var(--verde);
+}
+
+.resumen-stock.agotado {
+  color: var(--rojo);
+}
+
+.resumen-numero {
+  display: block;
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.resumen-etiqueta {
+  font-size: 13px;
+  color: var(--texto-suave);
+}
+
+.aviso-vendidos {
+  margin: 0 0 12px;
+  padding: 10px 14px;
+  font-size: 15px;
+  background: var(--oro-claro);
+  border-radius: 10px;
+}
+
+.campos {
+  margin: 0 0 20px;
+  overflow: hidden;
+  background: var(--superficie);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+}
+
+.campo {
+  display: flex;
+  gap: 12px;
+  padding: 11px 14px;
+  border-bottom: 1px solid var(--borde);
+}
+
+.campo:last-child {
+  border-bottom: 0;
+}
+
+.campo dt {
+  flex: 0 0 42%;
+  font-size: 14px;
+  color: var(--texto-suave);
+}
+
+.campo dd {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  font-size: 15px;
+  word-break: break-word;
+}
+
+.campo-vacio {
+  color: #b5aca0;
+}
+
+/* ---------- Botones grandes ---------- */
+
+.acciones {
+  display: grid;
+  gap: 10px;
+}
+
+.boton-grande {
+  width: 100%;
+  min-height: 64px;
+  font-size: 19px;
+  font-weight: 700;
+  color: #fff;
+  background: var(--oro);
+  border: 0;
+  border-radius: var(--radio);
+}
+
+.boton-grande.vender {
+  background: var(--verde);
+}
+
+.boton-grande.vender:active:not(:disabled) {
+  background: #24603f;
+}
+
+.boton-grande.deshacer {
+  color: var(--texto);
+  background: var(--superficie);
+  border: 1.5px solid var(--borde);
+}
+
+.boton-grande.reiniciar {
+  background: var(--rojo);
+}
+
+.boton-grande.cancelar {
+  color: var(--texto);
+  background: var(--superficie);
+}
+
+/* Va al final a proposito: debe ganar a las variantes de color de arriba,
+   si no un boton deshabilitado sigue pareciendo pulsable. */
+.boton-grande:disabled {
+  color: #9b9186;
+  background: #eae3d9;
+  border-color: transparent;
+}
+
+/* ---------- Escaner ---------- */
+
+.escaner {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  background: #000;
+}
+
+.escaner-video {
+  position: relative;
+  flex: 1;
+  overflow: hidden;
+}
+
+.escaner-video video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.oculto {
+  display: none;
+}
+
+.escaner-mira {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 78%;
+  height: 34%;
+  transform: translate(-50%, -50%);
+  border: 3px solid rgba(255, 255, 255, 0.9);
+  border-radius: 12px;
+  box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.45);
+}
+
+.escaner-pie {
+  padding: 16px 16px calc(16px + env(safe-area-inset-bottom));
+  background: #111;
+}
+
+.escaner-texto {
+  margin: 0 0 14px;
+  color: #fff;
+  font-size: 16px;
+  text-align: center;
+}
+
+.escaner-error {
+  margin: 0 0 14px;
+  padding: 12px;
+  color: #fff;
+  font-size: 15px;
+  text-align: center;
+  background: rgba(179, 38, 30, 0.9);
+  border-radius: 10px;
+}
+
+/* ---------- Exportar ---------- */
+
+.exportar h2 {
+  margin: 8px 0 16px;
+  font-size: 22px;
+}
+
+.panel {
+  padding: 18px 16px;
+  margin-bottom: 16px;
+  background: var(--superficie);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+  box-shadow: var(--sombra);
+}
+
+.panel h3 {
+  margin: 0 0 8px;
+  font-size: 18px;
+}
+
+.panel.peligro {
+  border-color: #f0d2d0;
+}
+
+.panel-cifras {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 14px;
+}
+
+.cifra {
+  display: block;
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--oro);
+}
+
+.cifra-etiqueta {
+  font-size: 14px;
+  color: var(--texto-suave);
+}
+
+.panel-texto {
+  margin: 0 0 16px;
+  font-size: 15px;
+  color: var(--texto-suave);
+}
+
+.barra {
+  height: 8px;
+  margin-top: 12px;
+  overflow: hidden;
+  background: var(--oro-claro);
+  border-radius: 999px;
+}
+
+.barra-relleno {
+  height: 100%;
+  background: var(--oro);
+  transition: width 0.2s ease;
+}
+
+.mensaje-ok {
+  margin: 12px 0 0;
+  font-size: 15px;
+  color: var(--verde);
+}
+
+.mensaje-error {
+  margin: 12px 0 0;
+  font-size: 15px;
+  color: var(--rojo);
+}
+
+/* ---------- Pestanas ---------- */
+
+.pestanas {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 20;
+  display: flex;
+  padding-bottom: env(safe-area-inset-bottom);
+  background: var(--superficie);
+  border-top: 1px solid var(--borde);
+}
+
+.pestanas button {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  min-height: var(--alto-pestanas);
+  padding: 8px 0;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--texto-suave);
+  background: none;
+  border: 0;
+}
+
+.pestanas button span {
+  font-size: 22px;
+}
+
+.pestanas button.activa {
+  color: var(--oro);
+}
+
+/* ---------- Pantallas anchas ---------- */
+
+@media (min-width: 640px) {
+  .contenido {
+    max-width: 900px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .lista {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .detalle-foto {
+    max-height: 380px;
+  }
+}

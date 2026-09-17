@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(python convertir.py)",
+      "Bash(sort -t. -k1 -n)",
+      "Bash(PYTHONIOENCODING=utf-8 python -c ' *)",
+      "PowerShell(npm install 2>&1)",
+      "PowerShell(npm ls vite react vite-plugin-pwa zxing-wasm exceljs idb-keyval --depth=0 2>&1)",
+      "PowerShell(python \"C:\\\\Users\\\\jesus\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\c--laragon-www-joyeria-primer-execl-python\\\\59238311-8e3a-4fc1-8f33-c700ae26a1a6\\\\scratchpad\\\\iconos.py\")",
+      "PowerShell(npm run build 2>&1)",
+      "PowerShell(npm ls playwright puppeteer 2>&1 | Select-Object -First 5; echo \"--- chrome ---\"; $p = @\\(\"C:\\\\Program Files\\\\Google\\\\Chrome\\\\Application\\\\chrome.exe\",\"C:\\\\Program Files \\(x86\\)\\\\Google\\\\Chrome\\\\Application\\\\chrome.exe\",\"C:\\\\Program Files \\(x86\\)\\\\Microsoft\\\\Edge\\\\Application\\\\msedge.exe\"\\); foreach \\($x in $p\\) { if \\(Test-Path $x\\) { echo \"FOUND: $x\" } })",
+      "PowerShell($env:BROWSER=\"none\"; npm run preview 2>&1)",
+      "PowerShell(npm run dev 2>&1)"
+    ]
+  }
+}

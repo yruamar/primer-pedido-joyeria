@@ -1,0 +1,19 @@
+# dependencias y artefactos de build
+node_modules/
+dist/
+dev-dist/
+
+# fuente de datos: se queda en local, no se publica (ver README)
+convertir.py
+pedido-filtrable2.xlsx
+
+# ajustes locales de Claude Code
+.claude/settings.local.json
+
+# varios
+*.log
+.DS_Store
+Thumbs.db
+
+# public/ SI se sube: productos.json, imagenes/ y los iconos son los datos
+# que la app necesita para funcionar.
