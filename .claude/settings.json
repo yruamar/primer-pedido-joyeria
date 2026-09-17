@@ -10,7 +10,12 @@
       "PowerShell(npm run build 2>&1)",
       "PowerShell(npm ls playwright puppeteer 2>&1 | Select-Object -First 5; echo \"--- chrome ---\"; $p = @\\(\"C:\\\\Program Files\\\\Google\\\\Chrome\\\\Application\\\\chrome.exe\",\"C:\\\\Program Files \\(x86\\)\\\\Google\\\\Chrome\\\\Application\\\\chrome.exe\",\"C:\\\\Program Files \\(x86\\)\\\\Microsoft\\\\Edge\\\\Application\\\\msedge.exe\"\\); foreach \\($x in $p\\) { if \\(Test-Path $x\\) { echo \"FOUND: $x\" } })",
       "PowerShell($env:BROWSER=\"none\"; npm run preview 2>&1)",
-      "PowerShell(npm run dev 2>&1)"
+      "PowerShell(npm run dev 2>&1)",
+      "WebFetch(domain:yruamar.github.io)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(git push *)",
+      "Bash(git --no-pager log --oneline -1)"
     ]
   }
 }

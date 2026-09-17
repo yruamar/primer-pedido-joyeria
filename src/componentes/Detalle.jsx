@@ -60,11 +60,10 @@ export default function Detalle({ producto, vendidos, onVender, onDeshacer, onVo
         <Campo etiqueta="¿Tiene piedras?" valor={producto.tienePiedras} />
         <Campo etiqueta="Cantidad pedida" valor={producto.qty} />
         <Campo etiqueta="Precio" valor={formatearPrecio(producto.precio)} />
-        <Campo etiqueta="Price" valor={extra.price} />
-        <Campo etiqueta="Price with discount" valor={extra.priceConDescuento} />
-        <Campo etiqueta="Total with discount" valor={extra.totalConDescuento} />
+        {/* Price, Price with discount, Total with discount y Shipped amount no se
+            muestran: son columnas en crudo del Excel que no hacen falta en tienda.
+            Siguen viajando en producto.extra, asi que la exportacion las conserva. */}
         <Campo etiqueta="Shipped Qty" valor={extra.shippedQty} />
-        <Campo etiqueta="Shipped amount" valor={extra.shippedAmount} />
         <Campo etiqueta="Out of Stock" valor={extra.outOfStock} />
         <Campo etiqueta="Imagen" valor={producto.imagen} />
       </dl>
