@@ -741,6 +741,27 @@ button {
   color: var(--texto-suave);
 }
 
+.panel-nota {
+  display: flex;
+  gap: 8px;
+  margin: -6px 0 14px;
+  padding: 10px 12px;
+  font-size: 14px;
+  color: var(--texto);
+  background: var(--oro-claro);
+  border-radius: 10px;
+}
+
+.panel-nota::before {
+  content: "⚠️";
+}
+
+.separador {
+  margin: 22px 0 18px;
+  border: 0;
+  border-top: 1px solid var(--borde);
+}
+
 .barra {
   height: 8px;
   margin-top: 12px;
