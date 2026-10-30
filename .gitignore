@@ -1,11 +1,16 @@
-# dependencias y artefactos de build
+﻿# dependencias y artefactos de build
 node_modules/
 dist/
 dev-dist/
 
-# fuente de datos: se queda en local, no se publica (ver README)
+# fuente de datos: se queda en local, no se publica (ver README).
+# El repositorio es publico y estos archivos llevan costos, margenes y
+# precios de compra. Ningun Excel entra: lo que se publica es su resultado,
+# public/productos.json y public/imagenes/.
 convertir.py
-pedido-filtrable2.xlsx
+*.xlsx
+*.xls
+~$*
 
 # ajustes locales de Claude Code
 .claude/settings.local.json
@@ -17,4 +22,3 @@ Thumbs.db
 
 # public/ SI se sube: productos.json, imagenes/ y los iconos son los datos
 # que la app necesita para funcionar.
-reporte-ventas.xlsx

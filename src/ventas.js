@@ -4,6 +4,7 @@
 import { get, set, del } from "idb-keyval";
 
 const CLAVE = "ventas";
+const CLAVE_VERSION = "catalogoVersion";
 
 export async function cargarVentas() {
   try {
@@ -50,4 +51,43 @@ export function sinVenta(ventas, id) {
 
 export function totalVendido(ventas) {
   return Object.values(ventas).reduce((suma, n) => suma + n, 0);
+}
+
+/**
+ * Los id de producto son numeros de fila del Excel: al cambiar de pedido, el
+ * id 2 pasa a designar otro articulo. Si se arrastraran las ventas guardadas
+ * se le atribuirian al producto equivocado, y en silencio. Por eso, cuando
+ * llega un catalogo nuevo, el contador se pone a cero.
+ *
+ * Devuelve true si hubo que reiniciar.
+ */
+let ultimaSync = { version: null, reinicio: false };
+
+export async function sincronizarVersion(version) {
+  if (!version) return false; // catalogo sin version: no se toca nada
+
+  // El resultado se recuerda por version. Sin esto, una segunda llamada (el
+  // StrictMode de desarrollo monta el efecto dos veces) ya encontraria la
+  // version nueva guardada, respondería "no hubo reinicio" y el aviso al
+  // usuario se perderia aunque las ventas si se hubieran borrado.
+  if (ultimaSync.version === version) return ultimaSync.reinicio;
+
+  try {
+    const guardada = await get(CLAVE_VERSION);
+    if (guardada === version) {
+      ultimaSync = { version, reinicio: false };
+      return false;
+    }
+
+    const habiaVentas = Object.keys((await get(CLAVE)) ?? {}).length > 0;
+    await del(CLAVE);
+    await set(CLAVE_VERSION, version);
+    // La primera vez no hay version guardada; solo se avisa si se perdio algo.
+    const reinicio = guardada !== undefined && habiaVentas;
+    ultimaSync = { version, reinicio };
+    return reinicio;
+  } catch (error) {
+    console.warn("No se pudo comprobar la version del catalogo:", error);
+    return false;
+  }
 }

@@ -256,6 +256,164 @@ button {
   border-radius: 999px;
 }
 
+.etiqueta.grupo {
+  color: var(--oro);
+  background: transparent;
+  border: 1px solid var(--borde);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- Aviso de catalogo nuevo ---------- */
+
+.aviso-version {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  margin-bottom: 10px;
+  background: var(--oro-claro);
+  border-radius: var(--radio);
+}
+
+.aviso-version p {
+  flex: 1;
+  margin: 0;
+  font-size: 14px;
+}
+
+.aviso-version button {
+  min-height: 40px;
+  padding: 0 14px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  background: var(--oro);
+  border: 0;
+  border-radius: 10px;
+}
+
+/* ---------- Filtro por grupo ---------- */
+
+.filtro-grupo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 14px;
+  margin-bottom: 10px;
+  background: var(--superficie);
+  border: 1.5px solid var(--oro);
+  border-radius: var(--radio);
+}
+
+.filtro-grupo span {
+  font-size: 15px;
+}
+
+.filtro-grupo strong {
+  color: var(--oro);
+}
+
+.filtro-grupo button {
+  min-height: 40px;
+  padding: 0 12px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--oro);
+  background: none;
+  border: 0;
+}
+
+/* ---------- Otras piezas del grupo ---------- */
+
+.hermanos {
+  margin-bottom: 18px;
+}
+
+.hermanos-cabecera {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.hermanos-cabecera h3 {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.hermanos-cabecera strong {
+  color: var(--oro);
+}
+
+.hermanos-cabecera button {
+  padding: 6px 0;
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+  color: var(--oro);
+  background: none;
+  border: 0;
+}
+
+/* Tira horizontal: se desliza con el pulgar sin salir de la ficha. */
+.hermanos-tira {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding-bottom: 6px;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+.hermano {
+  flex: 0 0 104px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 8px;
+  text-align: left;
+  background: var(--superficie);
+  border: 1px solid var(--borde);
+  border-radius: 12px;
+  scroll-snap-align: start;
+}
+
+.hermano img {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  background: var(--oro-claro);
+  border-radius: 8px;
+}
+
+.hermano .sin-foto {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  aspect-ratio: 1;
+  background: var(--oro-claro);
+  border-radius: 8px;
+}
+
+.hermano-codigo {
+  font-size: 12px;
+  line-height: 1.25;
+  color: var(--texto-suave);
+  overflow-wrap: anywhere;
+}
+
+.hermano-precio {
+  font-size: 14px;
+  font-weight: 700;
+}
+
 .tarjeta-stock {
   font-size: 15px;
   color: var(--verde);

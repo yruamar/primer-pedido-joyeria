@@ -26,8 +26,9 @@ const COLUMNAS = [
   { titulo: "Out of Stock", ancho: 12, valor: (p) => p.extra?.outOfStock },
   { titulo: "Product Name", ancho: 50, valor: (p) => p.nombre },
   { titulo: "Precio", ancho: 10, valor: (p) => p.precio },
+  { titulo: "CodigoGrupo", ancho: 14, valor: (p) => p.grupo },
   { titulo: "SKU", ancho: 16, valor: (p) => p.sku },
-  { titulo: "COdigo barras", ancho: 20, valor: (p) => p.barras },
+  { titulo: "COdigo barras", ancho: 26, valor: (p) => p.codigo ?? p.barras },
   // Columnas nuevas
   { titulo: "Vendidos", ancho: 11, valor: (p, vendidos) => vendidos },
   { titulo: "Disponible", ancho: 11, valor: (p, vendidos) => disponibleDe(p, vendidos) },

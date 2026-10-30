@@ -1,11 +1,12 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 
-import { cargarProductos, filtrar } from "./datos.js";
+import { cargarProductos, filtrar, hermanosDe } from "./datos.js";
 import {
   borrarVentas,
   cargarVentas,
   conVenta,
   guardarVentas,
+  sincronizarVersion,
   sinVenta,
 } from "./ventas.js";
 import { precalentar } from "./escaner.js";
@@ -24,21 +25,25 @@ export default function App() {
 
   const [pestana, setPestana] = useState("productos"); // productos | exportar
   const [consulta, setConsulta] = useState("");
+  const [grupo, setGrupo] = useState(null); // filtro por CodigoGrupo
   const [seleccionado, setSeleccionado] = useState(null);
   const [escaneando, setEscaneando] = useState(false);
+  const [reiniciado, setReiniciado] = useState(false);
 
   // Carga inicial: catalogo + ventas guardadas.
   useEffect(() => {
     let vivo = true;
     (async () => {
       try {
-        const [lista, guardadas] = await Promise.all([
-          cargarProductos(),
-          cargarVentas(),
-        ]);
+        const { version, productos: lista } = await cargarProductos();
+        // Antes de leer las ventas: si el catalogo es nuevo, los id ya no
+        // designan los mismos productos y el contador se pone a cero.
+        const hubo = await sincronizarVersion(version);
+        const guardadas = await cargarVentas();
         if (!vivo) return;
         setProductos(lista);
         setVentas(guardadas);
+        setReiniciado(hubo);
       } catch (error) {
         if (vivo) setFallo(error.message);
       } finally {
@@ -52,10 +57,10 @@ export default function App() {
     };
   }, []);
 
-  const filtrados = useMemo(
-    () => filtrar(productos, consulta),
-    [productos, consulta],
-  );
+  const filtrados = useMemo(() => {
+    const porGrupo = grupo ? productos.filter((p) => p.grupo === grupo) : productos;
+    return filtrar(porGrupo, consulta);
+  }, [productos, consulta, grupo]);
 
   // El detalle se relee del catalogo para que refleje el estado actual.
   const productoActual = useMemo(
@@ -64,6 +69,11 @@ export default function App() {
         ? null
         : (productos.find((p) => p.id === seleccionado) ?? null),
     [productos, seleccionado],
+  );
+
+  const hermanos = useMemo(
+    () => hermanosDe(productos, productoActual),
+    [productos, productoActual],
   );
 
   function actualizarVentas(siguiente) {
@@ -128,23 +138,54 @@ export default function App() {
           <Detalle
             producto={productoActual}
             vendidos={ventas[productoActual.id] ?? 0}
+            hermanos={hermanos}
             onVender={vender}
             onDeshacer={deshacer}
             onVolver={() => setSeleccionado(null)}
+            onAbrirHermano={(p) => setSeleccionado(p.id)}
+            onVerGrupo={(g) => {
+              setGrupo(g);
+              setConsulta("");
+              setSeleccionado(null);
+            }}
           />
         ) : pestana === "productos" ? (
           <>
+            {reiniciado && (
+              <div className="aviso-version">
+                <p>
+                  Llegó un catálogo nuevo, así que el contador de ventas se
+                  puso a cero.
+                </p>
+                <button type="button" onClick={() => setReiniciado(false)}>
+                  Entendido
+                </button>
+              </div>
+            )}
             <Buscador
               valor={consulta}
               onCambio={setConsulta}
               onEscanear={() => setEscaneando(true)}
             />
+            {grupo && (
+              <div className="filtro-grupo">
+                <span>
+                  Grupo <strong>{grupo}</strong>
+                </span>
+                <button type="button" onClick={() => setGrupo(null)}>
+                  Quitar filtro ✕
+                </button>
+              </div>
+            )}
             <Lista
               productos={filtrados}
               ventas={ventas}
               consulta={consulta}
               onAbrir={(p) => setSeleccionado(p.id)}
-              onLimpiar={() => setConsulta("")}
+              onLimpiar={() => {
+                setConsulta("");
+                setGrupo(null);
+              }}
             />
           </>
         ) : (

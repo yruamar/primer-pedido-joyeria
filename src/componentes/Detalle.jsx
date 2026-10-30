@@ -10,7 +10,16 @@ function Campo({ etiqueta, valor }) {
   );
 }
 
-export default function Detalle({ producto, vendidos, onVender, onDeshacer, onVolver }) {
+export default function Detalle({
+  producto,
+  vendidos,
+  hermanos = [],
+  onVender,
+  onDeshacer,
+  onVolver,
+  onAbrirHermano,
+  onVerGrupo,
+}) {
   const disponible = disponibleDe(producto, vendidos);
   const extra = producto.extra ?? {};
 
@@ -47,10 +56,47 @@ export default function Detalle({ producto, vendidos, onVender, onDeshacer, onVo
         </p>
       )}
 
+      {hermanos.length > 0 && (
+        <section className="hermanos">
+          <div className="hermanos-cabecera">
+            <h3>
+              Otras {hermanos.length} de <strong>{producto.grupo}</strong>
+            </h3>
+            <button type="button" onClick={() => onVerGrupo(producto.grupo)}>
+              Ver todas
+            </button>
+          </div>
+          <div className="hermanos-tira">
+            {hermanos.map((h) => (
+              <button
+                key={h.id}
+                type="button"
+                className="hermano"
+                onClick={() => onAbrirHermano(h)}
+                title={h.nombre}
+              >
+                {h.imagen ? (
+                  <img src={h.imagen} alt={h.nombre} loading="lazy" />
+                ) : (
+                  <span className="sin-foto" aria-hidden="true">
+                    💍
+                  </span>
+                )}
+                <span className="hermano-codigo">{h.codigo || h.sku}</span>
+                <span className="hermano-precio">
+                  {formatearPrecio(h.precio)}
+                </span>
+              </button>
+            ))}
+          </div>
+        </section>
+      )}
+
       <dl className="campos">
         <Campo etiqueta="ID (fila)" valor={producto.id} />
-        <Campo etiqueta="SKU" valor={producto.sku} />
-        <Campo etiqueta="Código de barras" valor={producto.barras} />
+        <Campo etiqueta="Código" valor={producto.codigo} />
+        <Campo etiqueta="Grupo" valor={producto.grupo} />
+        <Campo etiqueta="SKU proveedor" valor={producto.sku} />
         <Campo etiqueta="Sku completo" valor={producto.skuCompleto} />
         <Campo etiqueta="Order No." valor={producto.orderNo} />
         <Campo etiqueta="Tipo de objeto" valor={producto.tipo} />
